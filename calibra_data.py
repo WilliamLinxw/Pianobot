@@ -27,7 +27,6 @@ def get_img2arm_T(loc_pos,mark_pos):
     
     return T_cam2loc, Timg2arm
  
-
 if __name__ == "__main__":
     cali = CalibrationClass()
     cap = cv2.VideoCapture(3)

@@ -5,7 +5,6 @@ import os
 import time
 from midi_parse import get_notes_list
 from inspire_hand_r import InspireHandR
-22222222222222222
 
 def get_finger(notes_time_list):
     time_step = 50
