@@ -4,7 +4,7 @@ import os,sys,math,time
 import cv2.aruco as aruco
 import time
 from CalibrationClass import CalibrationClass 
-222222222222222
+
 def get_img2arm_T(loc_pos,mark_pos):
     loc_pos = np.array(loc_pos).reshape([4,1,2]).astype('float32')
     dst_temp = np.array( [[0,0], [0,500], [500,0], [500,500 ]] ).astype('float32')
