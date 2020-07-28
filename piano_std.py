@@ -82,8 +82,8 @@ class GetStdPiano(object):
             # print(key_pos[i])
             img2_std = cv2.circle(img2_std, (int(key_pos_white_2[i][0]) ,int(key_pos_white_2[i][1])), 5, (255,0,255), -1)
 
-        '''生成黑键的位置并显示在矩形图像中，黑键位置定义为两个白键之间，第一个for循环删去了可能有的两个黑键之间的间隔，第二个for循环将其位置显示
-        在画面中用于后续的坐标变换'''
+        # 生成黑键的位置并显示在矩形图像中，黑键位置定义为两个白键之间
+        # 第一个for循环删去了可能有的两个黑键之间的间隔，第二个for循环将其位置显示在画面中用于后续的坐标变换
         key_pos_black = []
         black_pos_line = h_line[7]
         img2_std = cv2.line(img2_std, tuple(black_pos_line[0]), tuple(black_pos_line[1]), (0,255,0), 1, 4)

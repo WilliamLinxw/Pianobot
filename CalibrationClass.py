@@ -9,8 +9,7 @@ import os,sys,math,time
 USE_XARM = 1
 if USE_XARM:
     from XarmControl import XarmControl
-    from inspire_hand_r import InspireHandR
-
+    
 class CalibrationClass(object):
     def __init__(self):
         self.calib_point=[]
@@ -33,7 +32,6 @@ class CalibrationClass(object):
             self.xx_init = 300
             self.yy_init = 64
             self.zz_init = -10
-            self.hand = InspireHandR()
             move_comd = [self.xx_init,self.yy_init,self.zz_init]
             self.pub_uarm_move(move_comd)
         else:
@@ -219,5 +217,3 @@ class CalibrationClass(object):
                     self.pub_uarm_move(move)
             break
         return img_0
-
-

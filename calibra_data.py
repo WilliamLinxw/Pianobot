@@ -29,7 +29,7 @@ def get_img2arm_T(loc_pos,mark_pos):
  
 if __name__ == "__main__":
     cali = CalibrationClass()
-    cap = cv2.VideoCapture(3)
+    cap = cv2.VideoCapture(2)
     print(cap)
     cap.set(3,1280)
     cap.set(4,720)
@@ -43,4 +43,3 @@ if __name__ == "__main__":
         if not img is None:
             cv2.imshow('test',img)
             cv2.waitKey(1)
-

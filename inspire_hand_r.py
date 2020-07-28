@@ -17,7 +17,9 @@ class InspireHandR:
         power4 = 400
         power5 = 400
         power6 = 800
+        print('before1')
         self.setpower(power1,power2,power3,power4,power5,power6)
+        print('before1')
 
         speed1 = 1000
         speed2 = 1000
@@ -25,24 +27,23 @@ class InspireHandR:
         speed4 = 1000
         speed5 = 1000
         speed6 = 1000
+        print('before2')
         self.setspeed(speed1,speed2,speed3,speed4,speed5,speed6) 
+        print('before2')
         self.f1_init_pos = 550    #小指初始位置
         self.f2_init_pos = 550    #无名指初始位置
         self.f3_init_pos = 500    #中指初始位置
         self.f4_init_pos = 550    #食指指初始位置
-        # self.f5_init_pos = 800    #拇指初始位置
-        # self.f6_init_pos = 200    #拇指转向掌心初始位置
         self.f5_init_pos = 1200    #拇指初始位置
         self.f6_init_pos = 600    #拇指转向掌心初始位置
 
-
+        # 手部张开，测试用
         # self.f1_init_pos = 0    #小指初始位置
         # self.f2_init_pos = 0    #无名指初始位置
         # self.f3_init_pos = 0    #中指初始位置
         # self.f4_init_pos = 0    #食指指初始位置
         # self.f5_init_pos = 0    #拇指初始位置
         # self.f6_init_pos = 0    #拇指转向掌心初始位置
-
 
         self.reset()
 
@@ -71,19 +72,12 @@ class InspireHandR:
     def checknum(self,data,leng):
         result = 0
         for i in range(2,leng):
+
             result += data[i]
         result = result&0xff
         #print(result)
         return result
 
-    #设置驱动器位置
-    # pos1 = 0 #小拇指伸直0，弯曲2000
-    # pos2 = 0 #无名指伸直0，弯曲2000
-    # pos3 = 0 #中指伸直0，弯曲2000
-    # pos4 = 0 #食指伸直0，弯曲2000
-    # pos5 = 0 #大拇指伸直0，弯曲2000
-    # pos6 = 2000 #大拇指转向掌心 2000
-    # setpos(pos1,pos2,pos3,pos4,pos5,pos6) 
     def setpos(self,pos1,pos2,pos3,pos4,pos5,pos6):
         global hand_id
         if pos1 <-1 or pos1 >2000:
@@ -158,7 +152,7 @@ class InspireHandR:
         # for i in range(1,datanum+6):
         #     print(hex(putdata[i-1]))
             
-        # getdata= self.ser.read(9)
+        getdata= self.ser.read(9)
         #print('返回的数据：',getdata)
         # print('返回的数据：')
         # for i in range(1,10):
@@ -322,7 +316,6 @@ class InspireHandR:
         print('发送的数据：')
         for i in range(1,datanum+6):
             print(hex(putdata[i-1]))
-        
         
         getdata= self.ser.read(9)
         print('返回的数据：')
@@ -708,6 +701,12 @@ class InspireHandR:
                 actforce[i-1] = -1
             else:
                 actforce[i-1] = getdata[i*2+5] + (getdata[i*2+6]<<8)
+        
+        # 串口收到的为又两个字节组成的无符号十六进制数，十进制的表示范围为0～65536，而实际数据为有符号的数据，表示力的不同方向，范围为-32768~32767，
+        # 因此需要对收到的数据进行处理，得到实际力传感器的数据：当读数大于32767时，次数减去65536即可。
+        for i in range(len(actforce)):
+            if actforce[i] > 32767:
+                actforce[i] = actforce[i] - 65536
         return actforce
 
     #读取电流
@@ -1238,16 +1237,17 @@ class InspireHandR:
 
 
 if __name__ == "__main__":
-
+    print('22222222222222222222222222222222222222222')
     hand = InspireHandR()
-    exit(0)
-    power1 = 40
-    power2 = 40
-    power3 = 40
-    power4 = 40
-    power5 = 100
-    power6 = 400
+
+    power1 = 400
+    power2 = 400
+    power3 = 400
+    power4 = 400
+    power5 = 400
+    power6 = 800
     hand.setpower(power1,power2,power3,power4,power5,power6)
+    print('3333333333333333333333333333333333333')
 
     speed1 = 1000
     speed2 = 1000
@@ -1260,7 +1260,7 @@ if __name__ == "__main__":
     is_static = [0,0,0,0,0,0]
     static_value = [0,0,0,0,0,0]
     tforce = 100
-    exit
+
     while 1:
         value0 = 0
         temp_value = [0,0,0,0,0,0]
@@ -1286,9 +1286,6 @@ if __name__ == "__main__":
                         static_value[i] = temp_value[i] #上一步的第i个手指位置
 
 
-            # if actforce[4] >100: pos_value[4] = temp_value[4]
-            # if actforce[5] >500: pos_value[5] = temp_value[5]
-            # pos_value[4] =  pos_value[4] 
             pos_value[5] =  pos_value[5] + 1000
             if pos_value[4] >2000: pos_value[4]  =2000
             if pos_value[5] >2000: pos_value[5]  =2000
@@ -1304,9 +1301,11 @@ if __name__ == "__main__":
             pos4 = pos_value[3] #食指伸直0，弯曲2000
             pos5 = pos_value[4] #大拇指伸直0，弯曲2000
             pos6 = pos_value[5] #大拇指转向掌心 2000
-            hand.setpos(pos1,pos2,pos3,pos4,pos5,pos6) 
+            hand.setpos(pos1,pos2,pos3,pos4,pos5,pos6)
+            print('444444444444444444444444444')
             print('pos:',pos1,pos2,pos3,pos4,pos5,pos6)
             print("actforce：", actforce)
+            print('5555555555555555')
             curr_pos = hand.get_actpos()
             print('currpos',curr_pos)
             time.sleep(0.005)
