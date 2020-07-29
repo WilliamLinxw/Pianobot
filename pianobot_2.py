@@ -3,7 +3,7 @@ import cv2
 import numpy as np
 import os
 import time
-from midi_parse import get_notes_list,get_hand_key_group,get_notes_hand_key_group,get_note_handid_mat
+from midi_parse import get_notes_list,get_hand_key_group,get_notes_hand_key_group,get_note_handid_mat,get_white_key_hand_group,get_black_key_hand_group
 from piano_config import config
 from piano_match import PianoLoacal
 from piano_std import GetStdPiano
@@ -31,15 +31,15 @@ if __name__ == '__main__':
 
     arm = XarmControl()
     mean_value = MeanValue(np.ones([4,2]),"int32")
-    #  notes_time_list = get_notes_list(filepath = "template/小星星2.mid", r=1.3)
+    # notes_time_list = get_notes_list(filepath = "template/小星星2.mid", r=1.3)
     # notes_time_list = get_notes_list(filepath = "template/天空之城.mid", r=1,track=0, diffnum = 12,t1 = 0,t2=30)
-    #  notes_time_list = get_notes_list(filepath = "template/致爱丽丝.mid", r=1,track=2, diffnum = -12)
-    #  notes_time_list = get_notes_list(filepath = "template/summer.mid", r=2,track=1, diffnum = -12)
+    # notes_time_list = get_notes_list(filepath = "template/致爱丽丝.mid", r=1,track=2, diffnum = -12)
+    # notes_time_list = get_notes_list(filepath = "template/summer.mid", r=2,track=1, diffnum = -12)
     # mid_name = "洋娃娃和小熊跳舞2.mid"
     # notes_time_list = get_notes_list(filepath = "template/"+mid_name, r=1,track=1, diffnum = 0,t1 = 0,t2=28.8)
     
     mid_name = "天空之城.mid"
-    # 　从mid文件中获取音符序列，1倍速
+    # 从mid文件中获取音符序列，1倍速
     notes_time_list = get_notes_list(filepath = "template/"+mid_name, r=1,track=0, diffnum = 24,t1 = 0,t2=32)
     # mid_name = "yyjjxq.mid"
     # notes_time_list = get_notes_list(filepath = "template/yyjjxq.mid", r=1,track=0, diffnum = 0,t1 = 0,t2=15)
@@ -48,17 +48,30 @@ if __name__ == '__main__':
     # notes_time_list = get_notes_list(filepath = "template/茉莉花.mid", r=1,track=0, diffnum = 1,t1 = 0,t2=30)
     # notes_time_list = get_notes_list(filepath = "template/超级玛丽.mid", r=1,track=0, diffnum = 0,t1 = 0,t2=10)
 
-    # 钢琴按键范围
-    piano_key = [60,62,64,65,67,69,71,
+    # 钢琴白键
+    white_key = [60,62,64,65,67,69,71,
                  72,74,76,77,79,81,83,
                  84,86,88,89,91,93,95]
     finger_num = 5
+    
+    # 钢琴黑键
+    black_key = [61,63,66,68,70,
+                 73,75,78,80,82,
+                 85,87,90,92,94]
+    # 白键的手位置组合
+    white_key_hand_group = get_white_key_hand_group(finger_num, white_key)
+
+    # 黑键的手位置组合
+    black_key_hand_group = get_black_key_hand_group(black_key)
+
     # 钢琴按键所有手掌位置
-    hand_key_group = get_hand_key_group(finger_num,piano_key)
+    hand_key_group = get_hand_key_group(white_key,black_key)
+
     # 获取每个音符对应的可能的手掌位置
     hand_id = get_notes_hand_key_group(notes_time_list,hand_key_group)
+    
     # 求多个音符手掌位置的交集，当交集为空的时候，前一个交集不为空的手掌位置，作为这些音符对应的手掌位置
-    note_hand = get_note_handid_mat(piano_key,finger_num,hand_id)
+    note_hand = get_note_handid_mat(white_key,finger_num,hand_id)
     
     # 获取手掌位置变化的几个位置
     hand_pos = []
@@ -188,6 +201,3 @@ if __name__ == '__main__':
         time.sleep(2)
 
         print("============================================")
-
-
-

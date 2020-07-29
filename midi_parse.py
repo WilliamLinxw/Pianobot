@@ -2,11 +2,11 @@ import numpy as np
 import midi
 from mid_tune import mid_tune, mid_tune_2,get_arm_finger,get_arm_finger_V2,get_finger
 
-def get_notes_list(filepath = "小星星2.mid", r=1,track=1,diffnum = 0,t1 =0,t2 =-1 ):
+def get_notes_list(filepath = "template/天空之城.mid", r=1,track=1,diffnum = 24,t1 =0,t2 =-1):
     pattern = midi.read_midifile(filepath)
     p = pattern[track]
-    #  midi.TimeSignatureEvent(tick=0, data=[4, 2, 96, 8]),
-    #   4拍为一节, 2分音符为一拍, 一分钟96拍??
+    # midi.TimeSignatureEvent(tick=0, data=[4, 2, 96, 8]),
+    # 4拍为一节, 2分音符为一拍, 一分钟96拍??
     print("resolution",pattern.resolution)
     resolution = pattern.resolution
     #  bpm = 120
@@ -69,20 +69,45 @@ def get_notes_list(filepath = "小星星2.mid", r=1,track=1,diffnum = 0,t1 =0,t2
 
     return notes_time_list
 
-def get_hand_key_group(finger_num,piano_key):
+# 白键所对应的所有手的位置
+def get_white_key_hand_group(finger_num,piano_key):
     '''获取所给钢琴键范围内所有可能的 手-按键分组'''
+
     hand_key_group=[]
     for i in range(len(piano_key)-finger_num+1):
         key_group = piano_key[i:i+finger_num]
         hand_key_group.append(key_group)
-
-    print("======================")
-    print(hand_key_group,len(hand_key_group))
     return hand_key_group
 
+# 黑键所对应的所有手的位置，若两个黑键之间有间隔，则将其分为两组，相邻的两个或三个音只有一种位置，如#D，#E为一组，食指弹#D，中指弹#D
+# #F，#G，#A为一组，食指弹#F，中指弹#G，无名指弹#F
+def get_black_key_hand_group(black_key_group):
+    hand_pos = []
+    black_key_hand_group = []
+    hand_pos.append(black_key_group[0])
+    i = 0
+    while True:
+        if i == len(black_key_group) - 1:
+            black_key_hand_group.append(hand_pos)
+            break
+        elif black_key_group[i+1] - black_key_group[i] < 3:
+            hand_pos.append(black_key_group[i+1])
+        else:
+            black_key_hand_group.append(hand_pos)
+            hand_pos = []
+            hand_pos.append(black_key_group[i+1])
+        i += 1
+    return black_key_hand_group
+
+# 将白键对应的手位置和黑键对应的手位置合并，并且按照位置从左到右排序
+def get_hand_key_group(white_key_hand, black_key_hand):
+    whole_hand_group = white_key_hand + black_key_hand
+    whole_hand_group.sort()
+    return whole_hand_group
+
 def get_notes_hand_key_group(notes_time_list,hand_key_group):
-    '''获取每个音符对应的可能的手掌位置 '''
-        
+    '''获取每个音符对应的可能的手掌位置'''
+
     for i in range(len(notes_time_list)):
         print('xxxxxxxxxxxxxxxxxxxxxxxx i:',i,notes_time_list[i,1])
         if notes_time_list[i,1]==61:notes_time_list[i,1]=62
@@ -165,15 +190,15 @@ def get_note_handid_mat(piano_key,finger_num,hand_id):
 
 
 #  notes_time_list = get_notes_list(filepath = "template/小星星2.mid", r=1)
-notes_time_list = get_notes_list(filepath = "template/天空之城.mid", r=1,track=0, diffnum = 24,t1 = 0,t2=-1)
+
 #  notes_time_list = get_notes_list(filepath = "template/致爱丽丝.mid", r=1,track=2, diffnum = -12)
 # notes_time_list = get_notes_list(filepath = "template/洋娃娃和小熊跳舞2.mid", r=1,track=1, diffnum = 0,t1 = 0,t2=10)
 # print(notes_time_list )
 if __name__=="__main__":
     # notes_time_list = get_notes_list(filepath = "template/欢乐颂2.mid", r=1,track=0, diffnum = 12,t1 = 0,t2=20)
     # notes_time_list = get_notes_list(filepath = "template/超级玛丽.mid", r=1,track=0, diffnum = 0,t1 = 0,t2=-1)
-    
-    print(notes_time_list )
+    notes_time_list = get_notes_list(filepath = "template/天空之城.mid", r=1,track=0, diffnum = 24,t1 = 0,t2=-1)
+    print(notes_time_list)
     piano_key = [60,62,64,65,67,69,71,
                  72,74,76,77,79,81,83,
                  84,86,88,89,91,93,95]
@@ -198,25 +223,3 @@ if __name__=="__main__":
     print('手掌位置对应钢琴键:',hand_pos_fg,len(hand_pos_fg))
 
     notes_time_list = mid_tune_2(note_hand,hand_pos_fg,notes_time_list)     
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

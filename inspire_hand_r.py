@@ -17,9 +17,8 @@ class InspireHandR:
         power4 = 400
         power5 = 400
         power6 = 800
-        print('before1')
         self.setpower(power1,power2,power3,power4,power5,power6)
-        print('before1')
+
 
         speed1 = 1000
         speed2 = 1000
@@ -27,9 +26,8 @@ class InspireHandR:
         speed4 = 1000
         speed5 = 1000
         speed6 = 1000
-        print('before2')
         self.setspeed(speed1,speed2,speed3,speed4,speed5,speed6) 
-        print('before2')
+
         self.f1_init_pos = 550    #小指初始位置
         self.f2_init_pos = 550    #无名指初始位置
         self.f3_init_pos = 500    #中指初始位置
@@ -1237,9 +1235,7 @@ class InspireHandR:
 
 
 if __name__ == "__main__":
-    print('22222222222222222222222222222222222222222')
     hand = InspireHandR()
-
     power1 = 400
     power2 = 400
     power3 = 400
@@ -1247,7 +1243,6 @@ if __name__ == "__main__":
     power5 = 400
     power6 = 800
     hand.setpower(power1,power2,power3,power4,power5,power6)
-    print('3333333333333333333333333333333333333')
 
     speed1 = 1000
     speed2 = 1000
@@ -1313,27 +1308,3 @@ if __name__ == "__main__":
         time.sleep(2)
         hand.reset()
         time.sleep(2)
-
-        # break
-        # for i in range(200):
-        #     value = 10*(200-i)
-        #     pos_value = [value]*6
-        #     actforce = get_actforce()
-        #     for i,f in enumerate(actforce):
-        #         if f >1000:
-        #             continue
-        #         if f >100: #如果手指受力大于100，就维持之前的位置
-        #             pos_value[i] = temp_value[i] 
-        #     temp_value = pos_value
-        #     pos1 = pos_value[0] #小拇指伸直0，弯曲2000
-        #     pos2 = pos_value[1] #无名指伸直0，弯曲2000
-        #     pos3 = pos_value[2] #中指伸直0，弯曲2000
-        #     pos4 = pos_value[3] #食指伸直0，弯曲2000
-        #     pos5 = pos_value[4] #大拇指伸直0，弯曲2000
-        #     pos6 = pos_value[5] #大拇指转向掌心 2000
-        #     setpos(pos1,pos2,pos3,pos4,pos5,pos6) 
-        #     print("actforce：", actforce)
-        #     time.sleep(0.005)
-        
-
-
