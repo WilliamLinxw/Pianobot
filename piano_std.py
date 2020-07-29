@@ -10,10 +10,16 @@ class GetStdPiano(object):
         self.g_qipan_pos = np.zeros([4,1,2])
         self.current_img = None
         self.white_key_num = 21
-        self.black_key_pos_num = 20
-        self.notes = [60,62,64,65,67,69,71,
-                      72,74,76,77,79,81,83,
-                      84,86,88,89,91,93,95]#
+        self.black_key_pos_num = 20 # Virtual number of black keys, there are gaps between them
+        self.notes = [60,61,62,63,64,65,66,
+                      67,68,69,70,71,72,73,
+                      74,75,76,77,78,79,80,
+                      81,82,83,84,85,86,87,
+                      88,89,90,91,92,93,94,
+                      95]
+        self.notes_black = [61,63,66,68,70,73,75,
+                            78,80,82,85,87,90,92,
+                            94]
         # self.notes = [72,74,76,77,79,81,83,
         #               84,86,88,89,91,93,95,
         #               96,98,100,101,103,105,107]#C5在最左边，一共21个白键
@@ -96,24 +102,39 @@ class GetStdPiano(object):
                 key_pos_black.append([(int(key_pos_white_2[i][0])+int(key_pos_white_2[i+1][0]))/2, start_pos_black[1] - dy_black*i])
         for i in range(len(key_pos_black)):
             img2_std = cv2.circle(img2_std, (int(key_pos_black[i][0]), int(key_pos_black[i][1])), 5, (255,0,255), -1)
+
+        # Merge the black key list and white key list
+        key_position_total = key_pos_white_2 + key_pos_black
+
+        # Sort the key to make sure the key's sequence is right
+        key_position_total.sort(reverse=True)
+
+        # Map the key positions in the rectangular frame back to the camera frame
+        M_inv = np.linalg.pinv(M)
+        pts_s = np.float32(key_position_total).reshape(-1, 1, 2)
+        cam_s_pos = cv2.perspectiveTransform(pts_s, M_inv)
+        cam_s_pos = cam_s_pos.reshape([-1, 2])
+        for i in range(len(key_position_total)):
+            img = cv2.circle(img, (int(cam_s_pos[i,0]) ,int(cam_s_pos[i,1]) ), 5, (255, 0, 255), -1)
+
+
+        # # 将得到的黑白键坐标映射回相机坐标系
+        # # 映射白键
+        # M_inv_white = np.linalg.pinv(M)
+        # pts_s_white = np.float32(key_pos_white_2).reshape(-1, 1, 2)
+        # cam_s_pos_white = cv2.perspectiveTransform(pts_s_white, M_inv_white) # 相机坐标下位置
+        # cam_s_pos_white = cam_s_pos_white.reshape([-1, 2])
+        # for i in range(self.white_key_num):
+        #     img = cv2.circle(img, (int(cam_s_pos_white[i,0]) ,int(cam_s_pos_white[i,1]) ), 5, (255, 0, 255), -1)
+        # # 映射黑键
+        # M_inv_black = np.linalg.pinv(M)
+        # pts_s_black = np.float32(key_pos_black).reshape(-1, 1, 2)
+        # cam_s_pos_black = cv2.perspectiveTransform(pts_s_black, M_inv_black)
+        # cam_s_pos_black = cam_s_pos_black.reshape([-1, 2])
+        # for i in range(len(key_pos_black)):
+        #     img = cv2.circle(img, (int(cam_s_pos_black[i,0]) ,int(cam_s_pos_black[i,1]) ), 5, (255, 0, 255), -1)
         
-        # 将得到的黑白键坐标映射回相机坐标系
-        # 映射白键
-        M_inv_white = np.linalg.pinv(M)
-        pts_s_white = np.float32(key_pos_white_2).reshape(-1, 1, 2)
-        cam_s_pos_white = cv2.perspectiveTransform(pts_s_white, M_inv_white) # 相机坐标下位置
-        cam_s_pos_white = cam_s_pos_white.reshape([-1, 2])
-        for i in range(self.white_key_num):
-            img = cv2.circle(img, (int(cam_s_pos_white[i,0]) ,int(cam_s_pos_white[i,1]) ), 5, (255, 0, 255), -1)
-        # 映射黑键
-        M_inv_black = np.linalg.pinv(M)
-        pts_s_black = np.float32(key_pos_black).reshape(-1, 1, 2)
-        cam_s_pos_black = cv2.perspectiveTransform(pts_s_black, M_inv_black)
-        cam_s_pos_black = cam_s_pos_black.reshape([-1, 2])
-        for i in range(len(key_pos_black)):
-            img = cv2.circle(img, (int(cam_s_pos_black[i,0]) ,int(cam_s_pos_black[i,1]) ), 5, (255, 0, 255), -1)
-        
-        keypos = [cam_s_pos_white, self.notes]
+        keypos = [cam_s_pos, self.notes]
         cv2.imshow("std_piano",img2_std)
         cv2.imshow('img1', img) 
 
