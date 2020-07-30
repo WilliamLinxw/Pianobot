@@ -65,7 +65,7 @@ if __name__ == '__main__':
     black_key_hand_group = get_black_key_hand_group(black_key)
 
     # 钢琴按键所有手掌位置
-    hand_key_group = get_hand_key_group(white_key,black_key)
+    hand_key_group = get_hand_key_group(white_key_hand_group,black_key_hand_group)
 
     # 获取每个音符对应的可能的手掌位置
     hand_id = get_notes_hand_key_group(notes_time_list,hand_key_group)
