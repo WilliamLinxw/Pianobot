@@ -65,7 +65,7 @@ if __name__ == '__main__':
     black_key_hand_group = get_black_key_hand_group(black_key)
 
     # 钢琴按键所有手掌位置
-    hand_key_group = get_hand_key_group(white_key_hand_group,black_key_hand_group)
+    hand_key_group = get_hand_key_group(white_key_hand_group,black_key_hand_groupfr)
 
     # 获取每个音符对应的可能的手掌位置
     hand_id = get_notes_hand_key_group(notes_time_list,hand_key_group)
@@ -85,19 +85,7 @@ if __name__ == '__main__':
     hand_pos_fg = []
     for i in hand_pos:
         hand_pos_fg.append(hand_key_group[i])
-    
     print('手掌位置对应钢琴键:',hand_pos_fg,len(hand_pos_fg))
-
-    # for i in range(len(notes_time_list)):
-        # print(notes_time_list[i],"~~~~~~~~~~~~",i)
-    # notes_time_list,switch_time = mid_tune(mid_name,notes_time_list)  #按手在不同位置时,手指对应的琴键编码
-    # print(notes_time_list)
-    # exit(0)
-    # finger_mat_list = get_arm_finger(notes_time_list,switch_time)
-    # for i in range(len(finger_mat_list)):
-    #     print("=======================i",i,len(finger_mat_list[i]) )
-    #     for sf in finger_mat_list[i]:
-    #         print(sf)
 
     #　将整段音符序列，按照手掌位置分割为不同段落
     notes_time_list = mid_tune_2(note_hand,hand_pos_fg,notes_time_list)     

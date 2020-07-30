@@ -105,31 +105,15 @@ def get_hand_key_group(white_key_hand, black_key_hand):
     whole_hand_group.sort()
     return whole_hand_group
 
+# 获取每个音符对应的可能的手掌位置
 def get_notes_hand_key_group(notes_time_list,hand_key_group):
-    '''获取每个音符对应的可能的手掌位置'''
 
-    for i in range(len(notes_time_list)):
-        print('xxxxxxxxxxxxxxxxxxxxxxxx i:',i,notes_time_list[i,1])
-        if notes_time_list[i,1]==61:notes_time_list[i,1]=62
-        if notes_time_list[i,1]==63:notes_time_list[i,1]=64
-        if notes_time_list[i,1]==66:notes_time_list[i,1]=65
-        if notes_time_list[i,1]==68:notes_time_list[i,1]=67
-        if notes_time_list[i,1]==70:notes_time_list[i,1]=69
-
-        if notes_time_list[i,1]==73:notes_time_list[i,1]=72
-        if notes_time_list[i,1]==75:notes_time_list[i,1]=76
-        if notes_time_list[i,1]==78:notes_time_list[i,1]=77
-        if notes_time_list[i,1]==80:notes_time_list[i,1]=79
-        if notes_time_list[i,1]==82:notes_time_list[i,1]=81
-    
     note_key = []
     for i in range(len(notes_time_list)):
         if notes_time_list[i,2]==1: #只找按下时刻的音符时间
             note_key.append([notes_time_list[i,0], notes_time_list[i,1]])
    
     hand_id = []
-    # print('@@@@:', len(notes_time_list))
-    # print('@@@@:', len(note_key))
     for i in range(len(note_key)):
         note_hand_id = []
         key_note = note_key[i][1]
@@ -137,9 +121,9 @@ def get_notes_hand_key_group(notes_time_list,hand_key_group):
             if key_note in hand_key:   # 当前音符在某个手掌的音符组中
                 note_hand_id.append(id)
         hand_id.append(note_hand_id)
-    # print('@@@@:', len(hand_id))
-    for i,hand in enumerate(hand_id):
-        print(i,"note_key:",note_key[i],hand)
+
+    # for i,hand in enumerate(hand_id):
+    #     print(i,"note_key:",note_key[i],hand)
 
     return hand_id
 
