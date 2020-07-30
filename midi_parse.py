@@ -187,7 +187,12 @@ if __name__=="__main__":
                  72,74,76,77,79,81,83,
                  84,86,88,89,91,93,95]
     finger_num = 5
-    hand_key_group = get_hand_key_group(finger_num,piano_key)
+    piano_key_black = [61,63,66,68,70,
+                       73,75,78,80,82,
+                       85,87,90,92,94]
+    white_key_hand_group = get_white_key_hand_group(finger_num,piano_key)
+    black_key_hand_group = get_black_key_hand_group(piano_key_black)
+    hand_key_group = get_hand_key_group(white_key_hand_group,black_key_hand_group)
     hand_id = get_notes_hand_key_group(notes_time_list,hand_key_group)
     note_hand = get_note_handid_mat(piano_key,finger_num,hand_id)
     

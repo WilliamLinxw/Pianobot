@@ -224,9 +224,7 @@ def get_arm_finger_V2(notes_time_list,hand_pos_fg):
             if notes_time_list[i][ii,0] - tt > 250:
                 notes_time_list[i][ii,0] = tt + 250 
 
-
-
-    # 修改修改音符序列倍率
+    # 修改音符序列倍率
     for i,notes in enumerate(notes_time_list):
         data = []
         for ii in range(len(notes_time_list[i])):
@@ -238,9 +236,14 @@ def get_arm_finger_V2(notes_time_list,hand_pos_fg):
     for i in range(len(notes_time_list)):
         f1 = hand_pos_fg[i]
         note_list = notes_time_list[i]
-        # print('!!!!!!!!!!!!!!!!!!!分段音符序列：',note_list)
-        if len(f1)==5:
-            f1 = [0] +f1
+        print('!!!!!!!!!!!!!!!!!!!分段音符序列：',note_list)
+        if len(f1) == 5:
+            f1 = [0] + f1
+        if len(f1) == 3:
+            f1 = [0, 0] + f1 + [0]
+        if len(f1) == 2:
+            f1 = [0, 0] + f1 + [0, 0]
+        
         # print("arm_finger:",i,len(note_list),note_list[0,0],note_list[-1,0],f1)
         finger_mat = get_finger(note_list,finger_index=f1 ,time_step=20,use_fixed = False)
         # for i in range(len(finger_mat)):
@@ -284,6 +287,7 @@ def get_finger(notes_time_list,finger_index=[71,72,74,76,77,79],time_step=50,use
                 finger_mat[start_id:end_id,1] = 1
             else:
                 finger_mat[start_id:end_id,1] = 0
+
     # 无名指    
     index = np.where(data[:,1]==f4)[0]
     for i in range(len(index)) :
@@ -313,14 +317,7 @@ def get_finger(notes_time_list,finger_index=[71,72,74,76,77,79],time_step=50,use
                 finger_mat[start_id:end_id,3] = 1
             else:
                 finger_mat[start_id:end_id,3] = 0
-    # for i in range(len(index)) :
-    #     if index[i] !=index[-1]:
-    #         start_id = np.where(finger_mat[:,0] == data[index[i],0] )[0][0]
-    #         end_id = np.where(finger_mat[:,0] == data[index[i+1],0] )[0][0]
-    #         if data[ index[i], 2] == 1:
-    #             finger_mat[start_id:end_id,3] = 1
-    #         else:
-    #             finger_mat[start_id:end_id,3] = 0
+
     # 食指 
     index = np.where(data[:,1]==f2)[0]
     for i in range(len(index)) :
@@ -366,7 +363,9 @@ def get_finger(notes_time_list,finger_index=[71,72,74,76,77,79],time_step=50,use
             else:
                 finger_mat[start_id:end_id,6] = 0
 
-
     finger_mat = finger_mat.astype('int')
     return finger_mat
+
+
+        
 

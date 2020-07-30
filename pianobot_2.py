@@ -65,7 +65,7 @@ if __name__ == '__main__':
     black_key_hand_group = get_black_key_hand_group(black_key)
 
     # 钢琴按键所有手掌位置
-    hand_key_group = get_hand_key_group(white_key_hand_group,black_key_hand_groupfr)
+    hand_key_group = get_hand_key_group(white_key_hand_group,black_key_hand_group)
 
     # 获取每个音符对应的可能的手掌位置
     hand_id = get_notes_hand_key_group(notes_time_list,hand_key_group)
@@ -104,7 +104,7 @@ if __name__ == '__main__':
         ret, img = cap.read()  # 捕获一帧图像
         img_shape = img.shape
         #  print("img_shape:",img_shape)
-        x_de =int( (img_shape[1] - config.h)/2 )
+        x_de = int((img_shape[1] - config.h)/2)
         y_de = int((img_shape[0] - config.w)/2)
         img = img[-config.w: ,x_de:x_de+config.h,:]
         
