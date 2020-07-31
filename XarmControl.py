@@ -92,7 +92,7 @@ class XarmControl:
                 pos4 = hand.f4_init_pos + diffn  if finger_mat[index,4] else hand.f4_init_pos  #食指伸直0，弯曲2000
                 if finger_mat[index,5] == 1: #大拇指相邻食指活动
                     pos5 = hand.f5_init_pos-100      #大拇指伸直0，弯曲2000
-                    pos6 = hand.f6_init_pos + 1200 
+                    pos6 = hand.f6_init_pos + 700 
                     for i in range(len(tumber_mat)-1):
                         if tumber_mat[i][0]==index:# 当前时刻是拇指相邻
                             # f5_init_pos = 800

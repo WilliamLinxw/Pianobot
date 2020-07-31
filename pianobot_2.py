@@ -135,7 +135,7 @@ if __name__ == '__main__':
             hand_pos_fg_f1 = []
             for fg_id in hand_pos_fg:
                 if len(fg_id)!=5:
-                    hand_pos_fg_f1.append([fg_id[2], note2arm[fg_id[2]]]) #中指位置
+                    hand_pos_fg_f1.append([fg_id[0], note2arm[fg_id[0]]]) #中指位置
                 else:
                     hand_pos_fg_f1.append([fg_id[1], note2arm[fg_id[1]]]) #食指位置
             # 机械臂按照顺序移动到几个手掌位置，并统计移动时间，保存移动时间
@@ -165,7 +165,7 @@ if __name__ == '__main__':
     hand_pos_fg_f1 = []
     for fg_id in hand_pos_fg:
         if len(fg_id)!=5:
-            hand_pos_fg_f1.append([fg_id[2], note2arm[fg_id[2]]]) #中指位置
+            hand_pos_fg_f1.append([fg_id[0], note2arm[fg_id[0]]]) #中指位置
         else:
             hand_pos_fg_f1.append([fg_id[1], note2arm[fg_id[1]]]) #食指位置
     
