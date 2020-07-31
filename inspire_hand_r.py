@@ -28,10 +28,10 @@ class InspireHandR:
         speed6 = 1000
         self.setspeed(speed1,speed2,speed3,speed4,speed5,speed6) 
 
-        self.f1_init_pos = 100    #小指初始位置
-        self.f2_init_pos = 100    #无名指初始位置
-        self.f3_init_pos = 100    #中指初始位置
-        self.f4_init_pos = 100    #食指指初始位置
+        self.f1_init_pos = 400    #小指初始位置
+        self.f2_init_pos = 400    #无名指初始位置
+        self.f3_init_pos = 400    #中指初始位置
+        self.f4_init_pos = 400    #食指指初始位置
         self.f5_init_pos = 1200    #拇指初始位置
         self.f6_init_pos = 100    #拇指转向掌心初始位置
 

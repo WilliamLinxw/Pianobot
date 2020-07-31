@@ -134,7 +134,10 @@ if __name__ == '__main__':
             note2arm = dict(zip(note_number,arm_pos))
             hand_pos_fg_f1 = []
             for fg_id in hand_pos_fg:
-                hand_pos_fg_f1.append([fg_id[1], note2arm[fg_id[1]]]) #食指位置
+                if len(fg_id)!=5:
+                    hand_pos_fg_f1.append([fg_id[2], note2arm[fg_id[2]]]) #中指位置
+                else:
+                    hand_pos_fg_f1.append([fg_id[1], note2arm[fg_id[1]]]) #食指位置
             # 机械臂按照顺序移动到几个手掌位置，并统计移动时间，保存移动时间
             arm.get_cost_time(hand_pos_fg_f1)
     
@@ -161,7 +164,10 @@ if __name__ == '__main__':
     # 手掌移动位置对应食指所在位置
     hand_pos_fg_f1 = []
     for fg_id in hand_pos_fg:
-        hand_pos_fg_f1.append([fg_id[1], note2arm[fg_id[1]]]) #食指位置
+        if len(fg_id)!=5:
+            hand_pos_fg_f1.append([fg_id[2], note2arm[fg_id[2]]]) #中指位置
+        else:
+            hand_pos_fg_f1.append([fg_id[1], note2arm[fg_id[1]]]) #食指位置
     
     key_id,pos = hand_pos_fg_f1[0]# 第一个手掌所在位置－食指所在位置
     f1_pos = pos

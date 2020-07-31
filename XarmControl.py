@@ -28,7 +28,7 @@ class XarmControl:
         self.init_pos()
 
         self.zz_init_move = 100
-        self.zz_play = -5
+        self.zz_play = 0
         self.hand = InspireHandR()
         self.arm.set_tcp_jerk(10000)
 
@@ -85,14 +85,14 @@ class XarmControl:
             if (curr_time - start_time)*1000 > finger_mat[index,0]:
                 noteoff = 500
                 noteon = 1200
-                diffn = 200
+                diffn = 500
                 pos1 = hand.f1_init_pos + diffn  if finger_mat[index,1] else hand.f1_init_pos  #小拇指伸直0，弯曲2000
                 pos2 = hand.f2_init_pos + diffn  if finger_mat[index,2] else hand.f2_init_pos  #无名指伸直0，弯曲2000
                 pos3 = hand.f3_init_pos + diffn  if finger_mat[index,3] else hand.f3_init_pos  #中指伸直0，弯曲2000
                 pos4 = hand.f4_init_pos + diffn  if finger_mat[index,4] else hand.f4_init_pos  #食指伸直0，弯曲2000
                 if finger_mat[index,5] == 1: #大拇指相邻食指活动
                     pos5 = hand.f5_init_pos-100      #大拇指伸直0，弯曲2000
-                    pos6 = hand.f6_init_pos + 500 
+                    pos6 = hand.f6_init_pos + 1200 
                     for i in range(len(tumber_mat)-1):
                         if tumber_mat[i][0]==index:# 当前时刻是拇指相邻
                             # f5_init_pos = 800
