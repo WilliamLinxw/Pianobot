@@ -8,7 +8,8 @@ class PianoConfig(object):
     use_cudasift = False                             #是否使用cuda加速版本sift
     w=720                                          # 分辨率
     h=960  
-
+    diff_x = 20 #末端偏移
+    diff_y = 0 
 config = PianoConfig()
 
 

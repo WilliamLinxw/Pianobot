@@ -243,6 +243,7 @@ class XarmControl:
             speed=1000, 
             wait=True,
             mvacc = 1000)
+        # return
         all_cost_time.append([key_id,0])
         print("!!!!!!hand_pos_fg_f1:",len(hand_pos_fg_f1))
         count = 0

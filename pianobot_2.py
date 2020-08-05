@@ -40,7 +40,7 @@ if __name__ == '__main__':
     
     mid_name = "天空之城.mid"
     # 从mid文件中获取音符序列，1倍速
-    notes_time_list = get_notes_list(filepath = "template/"+mid_name, r=1,track=0, diffnum = 24,t1 = 0,t2=32)
+    notes_time_list = get_notes_list(filepath = "template/"+mid_name, r=1,track=0, diffnum = 24,t1 = 0,t2 = 40)
     # mid_name = "yyjjxq.mid"
     # notes_time_list = get_notes_list(filepath = "template/yyjjxq.mid", r=1,track=0, diffnum = 0,t1 = 0,t2=15)
     # notes_time_list = get_notes_list(filepath = "template/欢乐颂2.mid", r=1,track=0, diffnum = 12,t1 = 0,t2=25)
@@ -135,9 +135,9 @@ if __name__ == '__main__':
             hand_pos_fg_f1 = []
             for fg_id in hand_pos_fg:
                 if len(fg_id)!=5:
-                    hand_pos_fg_f1.append([fg_id[0], note2arm[fg_id[0]]]) #中指位置
+                    hand_pos_fg_f1.append([fg_id[1], note2arm[fg_id[1]]]) #中指位置
                 else:
-                    hand_pos_fg_f1.append([fg_id[1], note2arm[fg_id[1]]]) #食指位置
+                    hand_pos_fg_f1.append([fg_id[2], note2arm[fg_id[2]]]) #食指位置
             # 机械臂按照顺序移动到几个手掌位置，并统计移动时间，保存移动时间
             arm.get_cost_time(hand_pos_fg_f1)
     
@@ -165,9 +165,9 @@ if __name__ == '__main__':
     hand_pos_fg_f1 = []
     for fg_id in hand_pos_fg:
         if len(fg_id)!=5:
-            hand_pos_fg_f1.append([fg_id[0], note2arm[fg_id[0]]]) #中指位置
+            hand_pos_fg_f1.append([fg_id[1], note2arm[fg_id[1]]]) #中指位置
         else:
-            hand_pos_fg_f1.append([fg_id[1], note2arm[fg_id[1]]]) #食指位置
+            hand_pos_fg_f1.append([fg_id[2], note2arm[fg_id[2]]]) #食指位置
     
     key_id,pos = hand_pos_fg_f1[0]# 第一个手掌所在位置－食指所在位置
     f1_pos = pos

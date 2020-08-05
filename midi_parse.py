@@ -181,7 +181,7 @@ def get_note_handid_mat(piano_key,finger_num,hand_id):
 if __name__=="__main__":
     # notes_time_list = get_notes_list(filepath = "template/欢乐颂2.mid", r=1,track=0, diffnum = 12,t1 = 0,t2=20)
     # notes_time_list = get_notes_list(filepath = "template/超级玛丽.mid", r=1,track=0, diffnum = 0,t1 = 0,t2=-1)
-    notes_time_list = get_notes_list(filepath = "template/天空之城.mid", r=1,track=0, diffnum = 24,t1 = 0,t2=-1)
+    notes_time_list = get_notes_list(filepath = "template/致爱丽丝.mid", r=1,track=0, diffnum = 0,t1 = 0,t2=20)
     print(notes_time_list)
     piano_key = [60,62,64,65,67,69,71,
                  72,74,76,77,79,81,83,

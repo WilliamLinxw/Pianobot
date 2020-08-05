@@ -97,6 +97,47 @@ class CalibrationClass(object):
         return [corner_center_pos,corner_ids]   
 
     
+    def get_mark_pos_v2(self,img2):
+        '''通过公众号二维码外边框定位'''
+        lower_blue = np.array([100, 110, 110])
+        upper_blue = np.array([130, 255, 255])
+        hsv = cv2.cvtColor(img2, cv2.COLOR_BGR2HSV)
+        img_b = cv2.inRange(hsv, lower_blue, upper_blue)
+        kernel = np.ones((3,3),np.uint8)  
+        # img = cv2.cvtColor(img,cv2.COLOR_RGB2GRAY)
+        # ret,img =cv2.threshold(img,thresh,255,cv2.THRESH_OTSU+cv2.THRESH_BINARY_INV)  
+        # img = cv2.erode(img,kernel,1)
+        center_pos = []
+        _,contours,hierachy=cv2.findContours(img_b,cv2.RETR_TREE,cv2.CHAIN_APPROX_SIMPLE)
+        for i,cnt in enumerate(contours):
+            cnt_len = cv2.arcLength(cnt, True)
+            cnt = cv2.approxPolyDP(cnt, 0.02*cnt_len, True)
+            if len(cnt) == 4 and cv2.isContourConvex(cnt):
+                # print('!!!!i, cv2.contourArea(cnt):',i, cv2.contourArea(cnt))
+                if cv2.contourArea(cnt)>1500 and cv2.contourArea(cnt)<5000: 
+                    cnt = cnt.reshape(-1, 2)
+                    # max_cos = np.max([angle_cos( cnt[i], cnt[(i+1) % 4], cnt[(i+2) % 4] ) for i in range(4)])
+                    # print(cnt)
+                    center_pos.append(np.mean(cnt,axis=0))
+                    cv2.drawContours(img2, [cnt], -1, (0, 255, 0), 2)
+
+        # print('center_pos:',center_pos)
+        if len(center_pos) != 0:
+            center_pos = np.array(center_pos)
+            center_pos = np.mean(center_pos,axis=0).astype('int')
+            img2 = cv2.circle(img2,(center_pos[0],center_pos[1]),10,(0,0,255),-1)
+
+            cv2.imshow('test2',img2)
+            cv2.waitKey(1)
+
+
+            return [center_pos],[0]
+        else:
+            cv2.imshow('test2',img2)
+            cv2.waitKey(1)
+            return [],[]
+
+    
     def run(self,img):
 
         # ret, img = self.cap.read()  # 捕获一帧图像
@@ -117,7 +158,9 @@ class CalibrationClass(object):
             img2_line = img2
         
             # 获取机械臂末端位置
-            corner_center_pos, ids = self.get_mark_pos(img)  
+            # corner_center_pos, ids = self.get_mark_pos(img)  
+            corner_center_pos, ids = self.get_mark_pos_v2(img)  
+
             armimg_pos = None
             if (corner_center_pos == [])  :
                 print("未找到机械臂末端标记！")

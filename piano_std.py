@@ -71,19 +71,21 @@ class GetStdPiano(object):
         dx_white = abs((white_pos_line[0][0] - white_pos_line[1][0])/self.white_key_num)
         img2_std = cv2.line(img2_std, tuple(white_pos_line[0]), tuple(white_pos_line[1]), (0,255,0), 1, 4)
         
-        # 生成白健的位置并显示在矩形图像中
+        # 生成白健的位置并显示在矩形图像中，其中 key_pos_white 为映射所用坐标，2为矩形画面中画图所需坐标
         key_pos_white = []
         key_pos_white_2 = []
         start_pos_white = white_pos_line[1]
         for i in range(self.white_key_num):
-            key_pos_white.append([start_pos_white[0]-dx_white*i - dx_white*0.5 ,start_pos_white[1]-dy_white*i-0 ])
-            key_pos_white_2.append([start_pos_white[0]-dx_white*i - dx_white*0.5 ,start_pos_white[1]-dy_white*i+10 ])
+            key_pos_white.append([start_pos_white[0]-dx_white*i - dx_white*0.5 ,start_pos_white[1]-dy_white*i-100])
+            key_pos_white_2.append([start_pos_white[0]-dx_white*i - dx_white*0.5 ,start_pos_white[1]-dy_white*i+10])
             # print(key_pos[i])
             img2_std = cv2.circle(img2_std, (int(key_pos_white_2[i][0]) ,int(key_pos_white_2[i][1])), 5, (255,0,255), -1)
 
         # 生成黑键的位置并显示在矩形图像中，黑键位置定义为两个白键之间
         # 第一个for循环删去了可能有的两个黑键之间的间隔，第二个for循环将其位置显示在画面中用于后续的坐标变换
+        # 其中 key_pos_black 为映射所用坐标，2为矩形画面中画图所需坐标
         key_pos_black = []
+        key_pos_black_2 = []
         black_pos_line = h_line[7]
         img2_std = cv2.line(img2_std, tuple(black_pos_line[0]), tuple(black_pos_line[1]), (0,255,0), 1, 4)
         dy_black = abs((black_pos_line[0][1] - black_pos_line[1][1])/self.black_key_pos_num)
@@ -92,13 +94,41 @@ class GetStdPiano(object):
             if i==2 or i==6 or i==9 or i==13 or i==16:
                 continue
             else:
-                key_pos_black.append([(int(key_pos_white_2[i][0])+int(key_pos_white_2[i+1][0]))/2, start_pos_black[1] - dy_black*i])
-        for i in range(len(key_pos_black)):
-            img2_std = cv2.circle(img2_std, (int(key_pos_black[i][0]), int(key_pos_black[i][1])), 5, (255,0,255), -1)
+                key_pos_black.append([(int(key_pos_white[i][0])+int(key_pos_white[i+1][0]))/2, start_pos_black[1] - dy_black*i - 180])
+                key_pos_black_2.append([(int(key_pos_white_2[i][0])+int(key_pos_white_2[i+1][0]))/2, start_pos_black[1] - dy_black*i ])
+                
+        
+        # 实际上黑键并不在两个白键的正中间，加入偏移从而使黑键的定位更精确，第一部分对矩形画面进行处理，第二部分对需要映射的画面进行处理
+        key_pos_black[0][0] += 5
+        key_pos_black[2][0] += 8
+        key_pos_black[3][0] += 2
+        key_pos_black[5][0] += 5
+        key_pos_black[7][0] += 8
+        key_pos_black[8][0] += 2
+        key_pos_black[9][0] -= 3
+        key_pos_black[10][0] += 3
+        key_pos_black[11][0] -= 2
+        key_pos_black[12][0] += 3
+        key_pos_black[14][0] -= 6
+
+        key_pos_black_2[0][0] += 5
+        key_pos_black_2[2][0] += 8
+        key_pos_black_2[3][0] += 2
+        key_pos_black_2[5][0] += 5
+        key_pos_black_2[7][0] += 8
+        key_pos_black_2[8][0] += 2
+        key_pos_black_2[9][0] -= 3
+        key_pos_black_2[10][0] += 3
+        key_pos_black_2[11][0] -= 2
+        key_pos_black_2[12][0] += 3
+        key_pos_black_2[14][0] -= 6
+
+        for i in range(len(key_pos_black_2)):
+            img2_std = cv2.circle(img2_std, (int(key_pos_black_2[i][0]), int(key_pos_black_2[i][1])), 5, (255,0,255), -1)
         cv2.imshow("std_piano",img2_std)
 
         # 合并黑键白键列表
-        key_position_total = key_pos_white_2 + key_pos_black
+        key_position_total = key_pos_white + key_pos_black
 
         # 按照横坐标大小对黑白键进行排序，以对应音符
         key_position_total.sort(reverse=True)

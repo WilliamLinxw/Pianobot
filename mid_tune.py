@@ -202,8 +202,8 @@ def get_arm_finger_V2(notes_time_list,hand_pos_fg):
     if len(notes_time_list)!=1:
         r = arm_move_time/note_cost_time
         max_r = np.max(r)
-        print('放慢倍率 :',max_r)
-        max_r = np.floor(max_r)
+        print('!!!!!!!!!!!!!!!!!!!!!!!!!!放慢倍率 :',max_r)
+        # max_r = np.floor(max_r)
         max_r = 1
     else:
         max_r = 1

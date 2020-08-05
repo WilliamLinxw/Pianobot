@@ -33,7 +33,7 @@ class InspireHandR:
         self.f3_init_pos = 400    #中指初始位置
         self.f4_init_pos = 400    #食指指初始位置
         self.f5_init_pos = 1200    #拇指初始位置
-        self.f6_init_pos = 500    #拇指转向掌心初始位置
+        self.f6_init_pos = 700    #拇指转向掌心初始位置
 
         # 手部张开，测试用
         # self.f1_init_pos = 0    #小指初始位置
