@@ -133,7 +133,6 @@ class XarmControl:
                             count = 0
                             flag_tumber = 0
                         count = count + 1
-
                     pos5 = f5_init_pos
                     pos6 = f6_init_pos
                     # if f5_init_pos==800:

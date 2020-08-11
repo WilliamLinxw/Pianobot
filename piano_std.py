@@ -97,7 +97,6 @@ class GetStdPiano(object):
                 key_pos_black.append([(int(key_pos_white[i][0])+int(key_pos_white[i+1][0]))/2, start_pos_black[1] - dy_black*i - 180])
                 key_pos_black_2.append([(int(key_pos_white_2[i][0])+int(key_pos_white_2[i+1][0]))/2, start_pos_black[1] - dy_black*i ])
                 
-        
         # 实际上黑键并不在两个白键的正中间，加入偏移从而使黑键的定位更精确，第一部分对矩形画面进行处理，第二部分对需要映射的画面进行处理
         key_pos_black[0][0] += 5
         key_pos_black[2][0] += 8

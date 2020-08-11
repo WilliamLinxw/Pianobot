@@ -24,7 +24,6 @@ def get_img2arm_T(loc_pos,mark_pos):
     Timg2arm =np.dot(arm_pos,np.linalg.pinv(img_pos))
     #  print("T_cam2loc:",T_cam2loc.shape)
     #  print("Timg2arm:", Timg2arm.shape)
-    
     return T_cam2loc, Timg2arm
  
 if __name__ == "__main__":

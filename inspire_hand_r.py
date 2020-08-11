@@ -18,8 +18,7 @@ class InspireHandR:
         power5 = 400
         power6 = 800
         self.setpower(power1,power2,power3,power4,power5,power6)
-
-
+        
         speed1 = 1000
         speed2 = 1000
         speed3 = 1000

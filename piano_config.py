@@ -1,5 +1,6 @@
 import os
 
+
 class PianoConfig(object):
     curr_dir =os.getcwd() + "/template"
     model_1 = curr_dir + "/piano_20200716_162539.npy"    # 特征点匹配，匹配模板

@@ -194,7 +194,7 @@ def get_arm_finger_V2(notes_time_list,hand_pos_fg):
         t = notes[0,0]
         note_dt = t - notes_time_list２[i-1][-1,0] #上一段最后一个音符时间
         note_cost_time.append(note_dt)
-    
+
     note_cost_time = np.array(note_cost_time)
     arm_move_time = all_cost_time[1:,1]*1000
     print('note_cost_time:',note_cost_time,len(note_cost_time))
@@ -229,7 +229,6 @@ def get_arm_finger_V2(notes_time_list,hand_pos_fg):
         data = []
         for ii in range(len(notes_time_list[i])):
             notes_time_list[i][ii,0] = notes_time_list[i][ii,0] * max_r
-
 
     # 获取手臂与手指动作序列:
     finger_mat_list = []

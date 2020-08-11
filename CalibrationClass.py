@@ -152,7 +152,6 @@ class CalibrationClass(object):
 
         img_0 = img.copy()
         while(1): #该循环只执行一次
-            
             img2 = img.copy()
             new_point = np.zeros([4,2])
             img2_line = img2

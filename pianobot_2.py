@@ -153,13 +153,6 @@ if __name__ == '__main__':
     
     # 获取每个手掌位置期间　手指运动的序列
     finger_mat_list = get_arm_finger_V2(notes_time_list,hand_pos_fg)
-    # for i in range(len(finger_mat_list)):
-    #     print("=========指法序列==============i",i,len(finger_mat_list[i]) )
-    #     for sf in finger_mat_list[i]:
-    #         print(sf)
-
-    # _,_,*fg = switch_time[0]
-    # f1 = fg[2]#食指对应的琴键
     
     # 手掌移动位置对应食指所在位置
     hand_pos_fg_f1 = []
